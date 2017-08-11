@@ -1,0 +1,55 @@
+<head>
+	<html lang="en-US">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<style>
+	table, td {
+	    border: 1px solid black;
+	}
+	</style>
+</head>
+<body>
+	<div ng-app="myApp" ng-controller="myCtrl">
+		<table>
+			<tr>
+				<td>Index</td>
+				<td>IP Addresses Available</td>
+				<td>Connect</td>
+			</tr>
+			<tr ng-repeat="x in ip_list">
+				<td>{[{$index}]}</td>
+				<td>{[{x}]}</td>
+				<td><button ng-click ="connect($index)">Connect</button></td>
+			</tr>
+		</table>
+		<br>
+		<button ng-click="start()">Search and Broadcast</button>
+		<button ng-click="stop()">Stop the Broadcast</button>
+		<button ng-click="generateWeights()">Generate Weights</button>
+		<p>Select Data:
+		<span ng-repeat="(i, v) in data_select">
+        {[{i}]} <input type="checkbox" ng-model="data_select[i]"/>
+        </span>
+        <button ng-click="get_data()">Get Data</button>
+        <span> {[{ fetched }]} </span>
+        </p>
+        <p> Algorithm Parameter Setting:
+          <span>step size--<input ng-model="mu" size="2px"></span>
+          <span>max iterations--<input ng-model="max_ite" size="2px"></span>
+          <span>method--<select ng-model="method">
+            <option value="SVRG">SVRG</option>
+            <option value="AVRG">AVRG</option>
+            <option value="SAGA">SAGA</option>
+          </select>
+          <span>Distributed Style--<select ng-model="dist_style">
+            <option value="Diffusion">Diffusion</option>
+            <option value="EXTRA">EXTRA</option>
+          </select>
+          </span>
+        <br>
+        <button ng-click="run_alg()">Start Running Alg</button>
+        <span>Iteration: {[{ iter }]} </span>
+        <span> <input type="range" id="myRange" ng-model="iter_per_call">{[{ iter_per_call }]} iter-per-draw</span>
+        </p>
+	</div>
+<script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
+</body>
