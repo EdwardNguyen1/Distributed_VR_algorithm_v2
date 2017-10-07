@@ -12,6 +12,7 @@ from util.VR_algorithm import *
 from util.cost_func import soft_max
 from scipy.misc import imresize
 import json
+import urllib.request
 
 socket = {}
 iplist = []
@@ -55,6 +56,8 @@ def search():
 
 @app.route("/connect", methods=['POST'])
 def connect():
+	# wait 1 mins
+	# urllib.request.urlopen('ip:port')
 	index = int(request.json['index'])
 	self_IP = str(request.json['self_IP'])
 	temp = int(self_IP[-3::])

@@ -12,7 +12,7 @@ app.controller('myCtrl', function($scope, $http, $interval, $timeout, $q){
     $scope.data_select = {0:false,  1:false,  2:false,  3:false,  4:false,
                           5:false, 6:false, 7:false, 8:false, 9:false}
 
-	function askIP() {
+	function askIP() { 
         window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;   //compatibility for firefox and chrome
             var pc = new RTCPeerConnection({iceServers:[]}), noop = function(){};
             pc.createDataChannel("");    //create a bogus data channel
@@ -27,6 +27,7 @@ app.controller('myCtrl', function($scope, $http, $interval, $timeout, $q){
     askIP()
 
 		var stop;
+        var promise;
 
     $scope.search = function(){
         $http({
@@ -38,12 +39,13 @@ app.controller('myCtrl', function($scope, $http, $interval, $timeout, $q){
         });
     };
 		$scope.start = function(){
-				stop = $interval($scope.search,1000);
+                $scope.stop();
+				promise = $interval($scope.search,10000);
 
 		};
 		$scope.stop = function(){
-				$interval.cancel(stop);
-				stop = undefined;
+				$interval.cancel(promise);
+				// promise = undefined;
 				console.log("Canceled");
 		};
     $scope.connect = function($index){
